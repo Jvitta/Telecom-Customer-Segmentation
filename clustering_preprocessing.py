@@ -3,8 +3,12 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder, StandardScaler
+import os
 import warnings
 warnings.filterwarnings('ignore')
+
+# Create visualizations directory if it doesn't exist
+os.makedirs('visualizations', exist_ok=True)
 
 def load_and_clean_data(filepath='churn_clean.csv'):
     """
@@ -79,7 +83,7 @@ def analyze_feature_correlations(df, threshold=0.6):
     plt.xticks(rotation=90)
     plt.yticks(rotation=0)
     plt.tight_layout()
-    plt.savefig('correlation_heatmap_clustering.png', dpi=300, bbox_inches='tight')
+    plt.savefig('visualizations/correlation_heatmap_clustering.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"\nFound {len(high_corr_features)} highly correlated feature pairs (threshold={threshold})")
@@ -155,7 +159,7 @@ def analyze_variance(df, threshold=0.005):
     plt.ylabel('Normalized Variance (variance/mean)')
     plt.xticks(rotation=90)
     plt.tight_layout()
-    plt.savefig('feature_variances.png', dpi=300, bbox_inches='tight')
+    plt.savefig('visualizations/feature_variances.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"Found {len(low_variance_features)} low-variance features (threshold={threshold})")

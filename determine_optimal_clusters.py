@@ -5,6 +5,7 @@ import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score, calinski_harabasz_score, davies_bouldin_score
 from yellowbrick.cluster import KElbowVisualizer, SilhouetteVisualizer
+import os
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -74,7 +75,7 @@ def elbow_method(data, max_clusters=15):
     plt.grid(True)
     
     plt.tight_layout()
-    plt.savefig('elbow_method.png', dpi=300, bbox_inches='tight')
+    plt.savefig('Visualizations/elbow_method.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"Elbow method suggests {elbow_point} clusters")
@@ -109,7 +110,7 @@ def silhouette_analysis(data, max_clusters=15):
     plt.title('Silhouette Analysis for Optimal k')
     plt.legend()
     plt.grid(True)
-    plt.savefig('silhouette_analysis.png', dpi=300, bbox_inches='tight')
+    plt.savefig('visualizations/silhouette_analysis.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"Silhouette analysis suggests {best_k} clusters")
@@ -135,7 +136,7 @@ def visualize_silhouette(data, best_k):
         axes[i].set_title(f'Silhouette Plot for k={k}')
     
     plt.tight_layout()
-    plt.savefig('silhouette_plots.png', dpi=300, bbox_inches='tight')
+    plt.savefig('visualizations/silhouette_plots.png', dpi=300, bbox_inches='tight')
     plt.close()
 
 def calinski_harabasz_analysis(data, max_clusters=15):
@@ -167,7 +168,7 @@ def calinski_harabasz_analysis(data, max_clusters=15):
     plt.title('Calinski-Harabasz Analysis for Optimal k')
     plt.legend()
     plt.grid(True)
-    plt.savefig('calinski_harabasz_analysis.png', dpi=300, bbox_inches='tight')
+    plt.savefig('visualizations/calinski_harabasz_analysis.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"Calinski-Harabasz analysis suggests {best_k} clusters")
@@ -202,7 +203,7 @@ def davies_bouldin_analysis(data, max_clusters=15):
     plt.title('Davies-Bouldin Analysis for Optimal k (Lower is Better)')
     plt.legend()
     plt.grid(True)
-    plt.savefig('davies_bouldin_analysis.png', dpi=300, bbox_inches='tight')
+    plt.savefig('visualizations/davies_bouldin_analysis.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"Davies-Bouldin analysis suggests {best_k} clusters")
@@ -228,7 +229,7 @@ def visualize_cluster_comparison(results):
     plt.ylabel('Optimal Number of Clusters')
     plt.title('Comparison of Optimal Cluster Numbers by Method')
     plt.tight_layout()
-    plt.savefig('cluster_comparison.png', dpi=300, bbox_inches='tight')
+    plt.savefig('visualizations/cluster_comparison.png', dpi=300, bbox_inches='tight')
     plt.close()
 
 def main():
