@@ -1,0 +1,11 @@
+name: clustering_analysis
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pandas
+  - numpy
+  - seaborn
+  - matplotlib
+  - scikit-learn
