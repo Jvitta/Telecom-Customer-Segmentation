@@ -1,0 +1,5 @@
+Elbow Method: 8
+Silhouette: 5
+Calinski-Harabasz: 2
+Davies-Bouldin: 13
+Average: 7

@@ -13,8 +13,13 @@ def load_preprocessed_data():
     Load the preprocessed data and feature names
     """
     print("Loading preprocessed data...")
-    processed_data = np.load('processed_data_for_clustering.npy')
-    feature_names = pd.read_csv('feature_names.csv', header=None).iloc[:, 0].tolist()
+    
+    # Load preprocessed data from CSV instead of NPY
+    processed_df = pd.read_csv('processed_data_for_clustering.csv')
+    
+    # Extract feature names and data
+    feature_names = processed_df.columns.tolist()
+    processed_data = processed_df.values
     
     print(f"Loaded data with shape: {processed_data.shape}")
     print(f"Number of features: {len(feature_names)}")

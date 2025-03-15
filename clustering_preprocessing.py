@@ -196,14 +196,13 @@ def main():
     # Scale features
     df_scaled, scaler = scale_features(df_uncorrelated)
     
-    # Save processed data
+    # Save processed data as CSV
     print("\nSaving processed data...")
-    pd.DataFrame(df_scaled).to_csv('processed_data_for_clustering.csv', index=False)
-
+    pd.DataFrame(df_scaled, columns=df_uncorrelated.columns).to_csv('processed_data_for_clustering.csv', index=False)
+    
     print("\nPreprocessing complete!")
     print(f"Final dataset shape: {df_scaled.shape}")
-    print("Processed data saved as 'processed_data_for_clustering.npy'")
-    print("Feature names saved as 'feature_names.csv'")
+    print("Processed data saved as 'processed_data_for_clustering.csv'")
     
     return df_scaled, df_uncorrelated.columns, scaler
 
