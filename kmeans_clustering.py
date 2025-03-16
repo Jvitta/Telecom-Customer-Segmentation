@@ -47,9 +47,10 @@ def get_optimal_clusters(manual_override=None):
     try:
         with open('optimal_clusters.txt', 'r') as f:
             lines = f.readlines()
-            avg_k = int(lines[-1].split(':')[-1].strip())
-        print(f"Loaded optimal number of clusters: {avg_k}")
-        return avg_k
+            # Use weighted average instead of simple average
+            weighted_k = int(lines[-1].split(':')[-1].strip())
+        print(f"Loaded optimal number of clusters (weighted): {weighted_k}")
+        return weighted_k
     except:
         print("Could not load optimal clusters file. Using default value of 5.")
         return 5

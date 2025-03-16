@@ -262,9 +262,25 @@ def main():
     # Visualize comparison
     visualize_cluster_comparison(results)
     
-    # Calculate average (rounded)
-    avg_k = round(sum(results.values()) / len(results))
-    print(f"\nAverage suggested number of clusters: {avg_k}")
+    # Calculate simple average (rounded)
+    simple_avg_k = round(sum(results.values()) / len(results))
+    print(f"\nSimple average suggested number of clusters: {simple_avg_k}")
+    
+    # Calculate weighted average based on telecom customer segmentation relevance
+    weights = {
+        'Silhouette': 0.4,      # Highest weight: measures both cohesion and separation
+        'Davies-Bouldin': 0.3,  # High weight: focuses on cluster separation
+        'Calinski-Harabasz': 0.2, # Moderate weight: works well with dense, separated clusters
+        'Elbow Method': 0.1     # Lowest weight: more subjective and can be ambiguous
+    }
+    
+    weighted_avg = sum(results[method] * weights[method] for method in weights)
+    weighted_k = round(weighted_avg)
+    
+    print("\nWeighted average calculation:")
+    for method, weight in weights.items():
+        print(f"{method}: {results[method]} clusters × {weight:.1f} weight = {results[method] * weight:.1f}")
+    print(f"Sum: {weighted_avg:.2f}, rounded to {weighted_k}")
     
     # Save results to file for use in kmeans_clustering.py
     with open('optimal_clusters.txt', 'w') as f:
@@ -272,13 +288,35 @@ def main():
         f.write(f"Silhouette: {silhouette_k}\n")
         f.write(f"Calinski-Harabasz: {ch_k}\n")
         f.write(f"Davies-Bouldin: {db_k}\n")
-        f.write(f"Average: {avg_k}\n")
+        f.write(f"Simple Average: {simple_avg_k}\n")
+        f.write(f"Weighted Average: {weighted_k}\n")
     
     print("\nAnalysis complete!")
     print("Results saved to 'optimal_clusters.txt'")
-    print(f"Recommended number of clusters for K-means: {avg_k}")
+    print(f"Recommended number of clusters for K-means: {weighted_k}")
     
-    return results, avg_k
+    # Create a visualization comparing simple vs weighted average
+    plt.figure(figsize=(10, 6))
+    methods = list(results.keys()) + ['Simple Avg', 'Weighted Avg']
+    values = list(results.values()) + [simple_avg_k, weighted_k]
+    colors = ['blue', 'green', 'purple', 'orange', 'gray', 'red']
+    
+    bars = plt.bar(methods, values, color=colors)
+    
+    # Add the values on top of the bars
+    for bar in bars:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2., height + 0.1,
+                 f'{int(height)}', ha='center', va='bottom')
+    
+    plt.xlabel('Method')
+    plt.ylabel('Optimal Number of Clusters')
+    plt.title('Comparison of Optimal Cluster Numbers by Method (Including Weighted Average)')
+    plt.tight_layout()
+    plt.savefig('visualizations/cluster_comparison_weighted.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    return results, weighted_k
 
 if __name__ == "__main__":
-    results, avg_k = main()
+    results, optimal_k = main()
